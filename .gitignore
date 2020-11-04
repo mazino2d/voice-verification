@@ -1,6 +1,11 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks,data
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,jupyternotebooks,data
+/dataset
+
+### Audio ###
+*.wav
+*.mp3
 
 ### Data ###
 *.csv
