@@ -29,5 +29,15 @@ For the public test set, we have 2789 files that make up 50,000 pairs of utteran
 - Download npy format dataset at [here](https://drive.google.com/file/d/1sWwITvIoUiyZa44yuKPUygPvmRGOb1xL/view?usp=sharing)
 
 - Download wavs format dataset at [here](https://drive.google.com/file/d/10abB9_1QRf-5_1CWPnQtu4zsH5Qmy-dA/view?usp=sharing)
+
+- Dowload by commandline
+```
+pip3 install gdown # or pip
+gdown https://drive.google.com/uc?id=10abB9_1QRf-5_1CWPnQtu4zsH5Qmy-dA # wav sample rate = 48000
+gdown https://drive.google.com/uc?id=1sWwITvIoUiyZa44yuKPUygPvmRGOb1xL # npy sample rate = 22050
+unzip wav.zip -d dataset/; rm wav.zip
+unzip npy.zip -d dataset/; rm npy.zip
+```
+
 ## Author
-[KhoiDD](), [ThucTH]()
+[KhoiDD](https://github.com/mazino2d), [ThucTH](https://github.com/thucth-qt)
