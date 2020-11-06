@@ -42,28 +42,36 @@ unzip npy.zip -d dataset/; rm npy.zip
 ## Enviroments
 - We use `tensorflow-gpu` 2.3.1 that is compatible with `CUDA` 10.1. [Install CUDA](https://developer.nvidia.com/cuda-10.1-download-archive-base?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal)
 
-- How to remove old `CUDA` completely from `Ubuntu`?
+- How to 
 
-```
-sudo apt-get purge nvidia*
-sudo apt-get purge cuda*
-sudo apt-get autoremove
-sudo apt-get autoclean
-sudo rm /etc/apt/sources.list.d/cuda*
-sudo rm -rf /usr/local/cuda*
-```
+- How to install Nvidia driver correctly?
 
-- How to install `CUDA` 10.2 on `Ubuntu`?
+    + Remove old `CUDA` completely from `Ubuntu`?
+
+    ```
+    sudo apt-get purge nvidia*
+    sudo apt-get purge cuda*
+    sudo apt-get autoremove
+    sudo apt-get autoclean
+    sudo rm /etc/apt/sources.list.d/cuda*
+    sudo rm -rf /usr/local/cuda*
+    ```
+
+    + Now it is good time to install correct NVIDIA drivers. For example from [here](https://www.nvidia.com/Download/index.aspx). P/S
+
+    ```
+    # cuda-runtime-10-1 : Depends: cuda-drivers (>= 418.39)
+    # do not run this command to install driver! this has error all the time!
+    # sudo ubuntu-drivers autoinstall
+    ```
+
+- How to install `CUDA` 10.1 on `Ubuntu`?
 
 ```
 wget https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda-repo-ubuntu1804-10-1-local-10.1.105-418.39_1.0-1_amd64.deb
-# sudo ubuntu-drivers autoinstall 
-# cuda-runtime-10-1 : Depends: cuda-drivers (>= 418.39)
-sudo add-apt-repository ppa:graphics-drivers/ppa
 sudo dpkg -i cuda-repo-ubuntu1804-10-1-local-10.1.105-418.39_1.0-1_amd64.deb
 sudo apt-key add /var/cuda-repo-10-1-local-10.1.105-418.39/7fa2af80.pub
 sudo apt update
-sudo apt install nvidia-418.39 nvidia-settings
 sudo apt install cuda-runtime-10-1 cuda-10-1 cuda
 ```
 
