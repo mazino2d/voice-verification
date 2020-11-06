@@ -71,17 +71,33 @@ class VoiceNpyDataGenerator(U.Sequence):
         X2 = np.empty((self.size_batch, *self.input_shape))
         Y = np.empty((self.size_batch), dtype=int)
 
+        for idx in range(self.num_pos):
+            choice_random = rd.randint(0, self.num_voices - 1)
+            X1[idx] = self._get_random_sample(choice_random)
+            X2[idx] = self._get_random_sample(choice_random)
+            Y[idx] = 0
+
+        for idx in range(self.num_pos, self.size_batch):
+            ls_choices_random = rd.sample(range(0, self.num_voices), 2)
+            X1[idx] = self._get_random_sample(ls_choices_random[0])
+            X2[idx] = self._get_random_sample(ls_choices_random[1])
+            Y[idx] = 1
+
         return [X1, X2], Y
 
     def _get_random_sample(self, idx):
+        "Generate one ramdom subsample"
         size: int = self.ls_voices[idx].shape[0]
-        start: int = rd.randint(0, size - self.sample_rate)
-        self.ls_voices[idx][start : start + self.sample_rate]
+        start: int = rd.randint(0, size - self.input_shape[0])
+        sample = self.ls_voices[idx][start : start + self.input_shape[0]]
+
+        return np.expand_dims(sample, axis=1)
 
 
 if __name__ == "__main__":
     try:
         dg = VoiceNpyDataGenerator("./dataset/npy", 8, 64)
+        print(dg._get_random_sample(0))
         print(dg.__getitem__(0))
         input("Enter to continue -> ...")
 
