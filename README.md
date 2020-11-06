@@ -30,13 +30,41 @@ For the public test set, we have 2789 files that make up 50,000 pairs of utteran
 
 - Download wavs format dataset at [here](https://drive.google.com/file/d/10abB9_1QRf-5_1CWPnQtu4zsH5Qmy-dA/view?usp=sharing)
 
-- Dowload by commandline
+- Dowload by command line
 ```
 pip3 install gdown # or pip
 gdown https://drive.google.com/uc?id=10abB9_1QRf-5_1CWPnQtu4zsH5Qmy-dA # wav sample rate = 48000
 gdown https://drive.google.com/uc?id=1sWwITvIoUiyZa44yuKPUygPvmRGOb1xL # npy sample rate = 22050
 unzip wav.zip -d dataset/; rm wav.zip
 unzip npy.zip -d dataset/; rm npy.zip
+```
+
+## Enviroments
+- We use `tensorflow-gpu` 2.3.1 that is compatible with `CUDA` 10.1. [Install CUDA](https://developer.nvidia.com/cuda-10.1-download-archive-base?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal)
+
+- How to remove old `CUDA` completely from `Ubuntu`?
+
+```
+sudo apt-get purge nvidia*
+sudo apt-get purge cuda*
+sudo apt-get autoremove
+sudo apt-get autoclean
+sudo rm /etc/apt/sources.list.d/cuda*
+sudo rm -rf /usr/local/cuda*
+```
+
+- How to install `CUDA` 10.2 on `Ubuntu`?
+
+```
+wget https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda-repo-ubuntu1804-10-1-local-10.1.105-418.39_1.0-1_amd64.deb
+# sudo ubuntu-drivers autoinstall 
+# cuda-runtime-10-1 : Depends: cuda-drivers (>= 418.39)
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo dpkg -i cuda-repo-ubuntu1804-10-1-local-10.1.105-418.39_1.0-1_amd64.deb
+sudo apt-key add /var/cuda-repo-10-1-local-10.1.105-418.39/7fa2af80.pub
+sudo apt update
+sudo apt install nvidia-418.39 nvidia-settings
+sudo apt install cuda-runtime-10-1 cuda-10-1 cuda
 ```
 
 ## Author
