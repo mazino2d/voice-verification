@@ -26,5 +26,8 @@ For the public test set, we have 2789 files that make up 50,000 pairs of utteran
     - label = 1 when these utterances are the same speaker
     - label = 0 when these utterances are not the same speaker
 
+- Download npy format dataset at [here](https://drive.google.com/file/d/1sWwITvIoUiyZa44yuKPUygPvmRGOb1xL/view?usp=sharing)
+
+- Download wavs format dataset at [here](https://drive.google.com/file/d/10abB9_1QRf-5_1CWPnQtu4zsH5Qmy-dA/view?usp=sharing)
 ## Author
 [KhoiDD](), [ThucTH]()
