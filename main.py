@@ -1,4 +1,3 @@
-from dataset import VoiceNpyDataGenerator
 from logger import Logger
 import model
 import dataset

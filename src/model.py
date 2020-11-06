@@ -7,7 +7,7 @@ import tensorflow.keras.metrics as M
 
 import os
 
-import config, loss
+import config
 
 # 0 = all messages are logged (default behavior)
 # 1 = INFO messages are not printed
@@ -85,6 +85,13 @@ def reshape(inpt: La.Layer, idx: int, shape) -> La.Layer:
     return oupt
 
 
+def msa(y_pred):
+    y_t1 = y_pred[0][0][-2]
+    y_t2 = y_pred[0][0][-1]
+
+    return abs(y_t1 - y_t2)
+
+
 def gen_model_v1() -> Model:
     inpt1 = La.Input(shape=config.INPUT_SHAPE, name="input_1")
     inpt2 = La.Input(shape=config.INPUT_SHAPE, name="input_2")
@@ -102,11 +109,15 @@ def gen_model_v1() -> Model:
 
     oupt = reshape(oupt, 1, (1, 2))
 
-    oupt = La.Lambda(lambda y: loss.huber_loss(y), output_shape=(1,), name="loss")(oupt)
+    oupt = La.Lambda(lambda y: msa(y), output_shape=(1,), name="loss")(oupt)
 
     model = Model(inputs=[inpt1, inpt2], outputs=[oupt])
 
-    model.compile(optimizer=O.Adam(config.LR_ADAM), loss=Lo.Huber())
+    model.compile(
+        optimizer=O.Adam(config.LR_ADAM),
+        loss=Lo.Huber(),
+        metrics=[M.BinaryAccuracy()],
+    )
 
     return model
 
