@@ -42,8 +42,6 @@ unzip npy.zip -d dataset/; rm npy.zip
 ## Enviroments
 - We use `tensorflow-gpu` 2.3.1 that is compatible with `CUDA` 10.1. [Install CUDA](https://developer.nvidia.com/cuda-10.1-download-archive-base?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1804&target_type=deblocal)
 
-- How to 
-
 - How to install Nvidia driver correctly?
 
     + Remove old `CUDA` completely from `Ubuntu`?
@@ -60,19 +58,33 @@ unzip npy.zip -d dataset/; rm npy.zip
     + Now it is good time to install correct NVIDIA drivers. For example from [here](https://www.nvidia.com/Download/index.aspx). P/S
 
     ```
-    # cuda-runtime-10-1 : Depends: cuda-drivers (>= 418.39)
-    # do not run this command to install driver! this has error all the time!
-    # sudo ubuntu-drivers autoinstall
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
+    sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+    sudo dpkg -i cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
+    sudo apt-get update
+    wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+    sudo apt install ./nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+    sudo apt-get update
+
+    # Install NVIDIA driver
+    sudo apt-get install --no-install-recommends nvidia-driver-450
+    # Reboot. Check that GPUs are visible using the command: nvidia-smi
     ```
 
 - How to install `CUDA` 10.1 on `Ubuntu`?
 
 ```
-wget https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda-repo-ubuntu1804-10-1-local-10.1.105-418.39_1.0-1_amd64.deb
-sudo dpkg -i cuda-repo-ubuntu1804-10-1-local-10.1.105-418.39_1.0-1_amd64.deb
-sudo apt-key add /var/cuda-repo-10-1-local-10.1.105-418.39/7fa2af80.pub
-sudo apt update
-sudo apt install cuda-runtime-10-1 cuda-10-1 cuda
+# Install development and runtime libraries (~4GB)
+sudo apt-get install --no-install-recommends \
+    cuda-10-1 \
+    libcudnn7=7.6.5.32-1+cuda10.1  \
+    libcudnn7-dev=7.6.5.32-1+cuda10.1
+
+
+# Install TensorRT. Requires that libcudnn7 is installed above.
+sudo apt-get install -y --no-install-recommends libnvinfer6=6.0.1-1+cuda10.1 \
+    libnvinfer-dev=6.0.1-1+cuda10.1 \
+    libnvinfer-plugin6=6.0.1-1+cuda10.1
 ```
 
 ## Author
